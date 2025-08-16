@@ -6,6 +6,7 @@ const app = express(); // Create an Express application
 const cookieParser = require("cookie-parser"); // Import cookie-parser middleware
 const connectToDb = require("./db/db"); // Import the database connection function
 const userRoutes = require("./routes/user.routes"); // Import user routes
+const taskRoutes = require("./routes/task.routes"); // Import task routes
 
 connectToDb(); // Connect to the database
 
@@ -21,5 +22,6 @@ app.get("/", (req, res) => {
 });
 
 app.use("/users", userRoutes); // Use user routes for all /api/users requests
+app.use("/tasks", taskRoutes); // Use task routes for all /api/tasks requests
 
 module.exports = app; // Export the Express application

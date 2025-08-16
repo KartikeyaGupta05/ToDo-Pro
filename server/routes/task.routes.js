@@ -6,7 +6,7 @@ const authMiddleware = require("../middlewares/auth.middleware"); // Import the 
 
 router.post(
   "/create",
-  authMiddleware,
+  authMiddleware.authUser,
   [
     body("title").notEmpty().withMessage("Title is required"),
     body("description").notEmpty().withMessage("Description is required"),
@@ -18,28 +18,27 @@ router.post(
       .withMessage("Invalid priority"),
     body("dueDate").isISO8601().withMessage("Invalid due date"),
   ],
-  taskController.createTask
+  taskController.create
 );
 
 // Get all tasks for logged-in user
-router.get("/", authMiddleware, taskController.getTasks);
+router.get("/", authMiddleware.authUser, taskController.getAllTasks);
 
 // Get single task by ID
-router.get("/:id", authMiddleware, taskController.getTaskById);
+router.get(
+  "/:id",
+  authMiddleware.authUser,
+  taskController.getTaskById
+);
 
 // Update a task
-router.put(
+router.patch(
   "/:id",
-  authMiddleware,
-  [
-    body("status").optional().isIn(["pending", "in-progress", "completed"]),
-    body("priority").optional().isIn(["low", "medium", "high"]),
-    body("dueDate").optional().isISO8601(),
-  ],
+  authMiddleware.authUser,
   taskController.updateTask
 );
 
 // Delete a task
-router.delete("/:id", authMiddleware, taskController.deleteTask);
+router.delete("/:id", authMiddleware.authUser, taskController.deleteTask);
 
 module.exports = router; // Export the router for use in other files

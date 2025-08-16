@@ -20,7 +20,7 @@ const taskSchema = new mongoose.Schema(
     dueDate: Date,
     userId: {
       type: mongoose.Schema.Types.ObjectId, // Correct way
-      ref: "User", // Refers to your User model
+      ref: "user", // Refers to your User model
       required: true,
     },
   },

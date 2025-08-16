@@ -37,4 +37,5 @@ router.get(
 
 router.get("/logout", authMiddleware.authUser, userController.logoutUser);
 
+
 module.exports = router; // Export the router for use in other files
